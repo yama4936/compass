@@ -9,6 +9,7 @@ function init() {
     // 簡易的なOS判定
     os = detectOSSimply();
     if (os == "iphone") {
+        document.addEventListener("touchstart", permitDeviceOrientationForSafari);
         // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
