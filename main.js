@@ -37,7 +37,7 @@ function init() {
 
 
 // ジャイロスコープと地磁気をセンサーから取得
-function orientation(event) {
+function orientation(event) {//addEventListenerからもらってる
     let absolute = event.absolute;
     let alpha = event.alpha;
     let beta = event.beta;
@@ -46,11 +46,11 @@ function orientation(event) {
     let degrees;
     if(os == "iphone") {
         // webkitCompasssHeading値を採用
-        degrees = event.webkitCompassHeading;
+        degrees = event.webkitCompassHeading;//iPhone特有のプロパティで、デバイスの地磁気センサーを使った方向データ（0～360度）を直接取得
 
     }else{
         // deviceorientationabsoluteイベントのalphaを補正
-        degrees = compassHeading(alpha, beta, gamma);
+        degrees = compassHeading(alpha, beta, gamma);//デバイスのジャイロスコープのデータを基に方向を計算する
     }
 
     let direction;
@@ -75,8 +75,7 @@ function orientation(event) {
         direction = "北西";
     }
 
-    document.querySelector("#direction").innerHTML =
-        direction + " : " + degrees;
+    document.querySelector("#direction").innerHTML = direction + " : " + degrees;
     document.querySelector("#absolute").innerHTML = absolute;
     document.querySelector("#alpha").innerHTML = alpha;
     document.querySelector("#beta").innerHTML = beta;
@@ -85,7 +84,7 @@ function orientation(event) {
 
 // 端末の傾き補正（Android用）
 // https://www.w3.org/TR/orientation-event/
-function compassHeading(alpha, beta, gamma) {
+function compassHeading(alpha, beta, gamma) {//Android専用の角度計算用関数なので読まない
     let degtorad = Math.PI / 180; // Degree-to-Radian conversion
 
     let _x = beta ? beta * degtorad : 0; // beta value
