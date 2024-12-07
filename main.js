@@ -30,8 +30,8 @@ function init() {
             orientation,
             true
         );
-    } else{
-        window.alert("PC未対応サンプル");
+    } else {
+        window.alert("センサーがついていないため対応していません");
     }
 }
 
@@ -44,11 +44,11 @@ function orientation(event) {//addEventListenerからもらってる
     let gamma = event.gamma;
 
     let degrees;
-    if(os == "iphone") {
+    if (os == "iphone") {
         // webkitCompasssHeading値を採用
         degrees = event.webkitCompassHeading;//iPhone特有のプロパティで、デバイスの地磁気センサーを使った方向データ（0～360度）を直接取得
 
-    }else{
+    } else {
         // deviceorientationabsoluteイベントのalphaを補正
         degrees = compassHeading(alpha, beta, gamma);//デバイスのジャイロスコープのデータを基に方向を計算する
     }
@@ -80,6 +80,14 @@ function orientation(event) {//addEventListenerからもらってる
     document.querySelector("#alpha").innerHTML = alpha;
     document.querySelector("#beta").innerHTML = beta;
     document.querySelector("#gamma").innerHTML = gamma;
+
+    // コンパス針を回転
+    const needle = document.getElementById('needle');
+    needle.style.transform = `translate(-50%, 0) rotate(${degrees}deg)`;
+
+    // イベントリスナーを追加してジャイロスコープイベントを監視
+    window.addEventListener('deviceorientationabsolute', orientation);
+
 }
 
 // 端末の傾き補正（Android用）

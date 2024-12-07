@@ -1,76 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コンパスUIにゃん</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
-    }
-    .compass-container {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      border: 5px solid #333;
-      border-radius: 50%;
-      background-color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .compass-needle {
-      position: absolute;
-      width: 5px;
-      height: 80px;
-      background-color: #e63946;
-      transform-origin: bottom center;
-      transform: rotate(0deg);
-    }
-    .angle-display {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #333;
-    }
-    .slider-container {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-    }
-    input[type="range"] {
-      margin-left: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンパス</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>コンパスUIにゃん</h1>
-  <div class="compass-container">
-    <div class="compass-needle" id="needle"></div>
-  </div>
-  <div class="angle-display" id="angle-display">角度: 0°</div>
-  <div class="slider-container">
-    <label for="angle-slider">角度調整:</label>
-    <input type="range" id="angle-slider" min="0" max="360" value="0">
-  </div>
+    <ul>
+        <input type="button" id="permit" value="Apple製品を使ってる場合はこのボタンを押して許可してね" />
+        <li>【方角】<span id="direction"></span></li>
+        <li>【absolute】<span id="absolute"></span></li>
+        <li>【alpha】<span id="alpha"></span></li>
+        <li>【beta】<span id="beta"></span></li>
+        <li>【gamma】<span id="gamma"></span></li>
+    </ul>
+    <h1>コンパス</h1>
+    <div class="compass-container">
+        <div class="compass-needle" id="needle"></div>
+    </div>
+    <div class="angle-display" id="angle-display">角度: 0°</div>
 
-  <script>
-    const needle = document.getElementById('needle');
-    const angleDisplay = document.getElementById('angle-display');
-    const angleSlider = document.getElementById('angle-slider');
 
-    // スライダーの値を針の角度に反映させる
-    angleSlider.addEventListener('input', () => {
-      const angle = angleSlider.value;
-      needle.style.transform = `rotate(${angle}deg)`;
-      angleDisplay.textContent = `角度: ${angle}°`;
-    });
-  </script>
+    <script src="main.js"></script>
 </body>
+
 </html>

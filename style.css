@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+  .compass-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 5px solid #333;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .compass-needle {
+    position: absolute;
+    width: 5px;
+    height: 80px;
+    background-color: #e63946;
+    bottom: 50%; /* 底部を円の中央に合わせる */
+    left: 50%; /* 水平方向の中央に合わせる */
+    transform-origin: bottom center; /* 底部を回転基点にする */
+    transform: translate(-50%, 0) rotate(0deg); /* 左右中心に調整 */
+  }
+  .angle-display {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  .slider-container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+  }
+  input[type="range"] {
+    margin-left: 10px;
+  }
