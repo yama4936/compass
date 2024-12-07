@@ -4,12 +4,13 @@ JSとセンサー系の練習としてコンパスのwebアプリをつくりま
 
 ## 概要
 
-- 方角と角度がWebで分かります
+- 方角と角度がWebで分かる
 - いつでもインターネットさえ繋がっていれば方角を知ることが出来る
 
 ## 使用方法
 
-https://yama4936.github.io/compasspractice/のサイトを開く
+https://yama4936.github.io/compasspractice/
+を開く
 
 ## 実行方法の例
 
