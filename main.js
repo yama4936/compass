@@ -10,12 +10,10 @@ function init() {
     os = detectOSSimply();
     if (os == "iphone") {
         //document.addEventListener("touchstart", permitDeviceOrientationForSafari);
-
         //document.addEventListener("scroll", permitDeviceOrientationForSafari);
-
         //document.addEventListener("touchstart", alert("タップしたよ"));
-
         //document.addEventListener("scroll", alert("スクロールしたよ"));
+        
         // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
