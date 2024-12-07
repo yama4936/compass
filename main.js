@@ -33,9 +33,10 @@ function judgOS() {
         window.alert("PC未対応サンプル");
     }
 }
+
 // iPhone + Safariの場合はDeviceOrientation APIの使用許可をユーザに求める
 function permitDeviceOrientationForSafari() {
-    DeviceOrientationEvent.requestPermission()
+    DeviceOrientationEvent.requestPermission()//
         .then(response => {
             if (response === "granted") {
                 window.addEventListener(
@@ -86,8 +87,7 @@ function orientation(event) {
         direction = "北西";
     }
 
-    document.querySelector("#direction").innerHTML =
-        direction + " : " + degrees;
+    document.querySelector("#direction").innerHTML = direction + " : " + degrees;
     document.querySelector("#absolute").innerHTML = absolute;
     document.querySelector("#alpha").innerHTML = alpha;
     document.querySelector("#beta").innerHTML = beta;
