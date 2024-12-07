@@ -9,24 +9,9 @@
 
     <script type="text/javascript">
         alert("alartじゃなくてalert")
-        // ブラウザが通知をサポートしているか確認する
-        if (!('Notification' in window)) {
-            alert('未対応のブラウザです');
+        window.onload = function () {
+            request_permission();
         }
-        else {
-            // 許可を求める
-            Notification.requestPermission()
-                .then((permission) => {
-                    if (permission == 'granted') {
-                        // 許可
-                    } else if (permission == 'denied') {
-                        // 拒否
-                    } else if (permission == 'default') {
-                        // 無視
-                    }
-                });
-        }
-
     </script>
 </head>
 
