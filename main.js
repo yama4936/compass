@@ -13,7 +13,7 @@ function init() {
         //document.addEventListener("scroll", permitDeviceOrientationForSafari);
         //document.addEventListener("touchstart", alert("タップしたよ"));
         //document.addEventListener("scroll", alert("スクロールしたよ"));
-        
+
         // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
@@ -73,11 +73,8 @@ function orientation(event) {//addEventListenerからもらってる
         direction = "北西";
     }
 
-    document.querySelector("#direction").innerHTML = direction + " : " + degrees;
-    document.querySelector("#absolute").innerHTML = absolute;
-    document.querySelector("#alpha").innerHTML = alpha;
-    document.querySelector("#beta").innerHTML = beta;
-    document.querySelector("#gamma").innerHTML = gamma;
+    document.querySelector("#direction").innerHTML =  degrees;
+    document.querySelector("#angle").innerHTML =  degrees;
 
     // コンパス針を回転
     const needle = document.getElementById('needle');
