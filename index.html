@@ -9,9 +9,23 @@
 
     <script type="text/javascript">
         alert("alartじゃなくてalert")
-        window.onload = function () {
-            request_permission();
-        }
+        document.addEventListener("scroll", function initiatePermissionRequest() {
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {
+                DeviceOrientationEvent.requestPermission()
+                    .then((response) => {
+                        if (response === "granted") {//granted許可、denied拒否
+                            window.addEventListener("deviceorientation", detectDirection);
+                            console.log("DeviceOrientation permission granted");
+                        } else {
+                            console.log("Permission denied");
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                console.log("DeviceOrientationEvent.requestPermission is not supported");
+            }
+            document.removeEventListener("scroll", initiatePermissionRequest);
+        });
     </script>
 </head>
 
