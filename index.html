@@ -9,8 +9,8 @@
 
     <script type="text/javascript">
         alert("alartじゃなくてalert")
-        document.addEventListener("scroll", function initiatePermissionRequest() {
-            if (typeof DeviceOrientationEvent.requestPermission === "function") {
+        document.addEventListener("scroll", function initiatePermissionRequest() {//removeのために関数を定義
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {//DeviceOrientationEvent.requestPermissionに関数が入っている場合
                 DeviceOrientationEvent.requestPermission()
                     .then((response) => {
                         if (response === "granted") {//granted許可、denied拒否
@@ -37,6 +37,109 @@
         <li>【alpha】<span id="alpha"></span></li>
         <li>【beta】<span id="beta"></span></li>
         <li>【gamma】<span id="gamma"></span></li>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        あ
     </ul>
 </body>
 
