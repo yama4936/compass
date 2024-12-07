@@ -1,21 +1,15 @@
-// OSの判定
-function judgOS() {
-    let os;//userAgentで読み込んでindexofで探している
-    if (
-        navigator.userAgent.indexOf("iPhone") > 0 ||
-        navigator.userAgent.indexOf("iPad") > 0 ||
-        navigator.userAgent.indexOf("iPod") > 0
-    ) {
-        // iPad OS13以上のsafariはデフォルト「Macintosh」なので別途要対応
-        os = "iphone";
-    } else if (navigator.userAgent.indexOf("Android") > 0) {
-        os = "android";
-    } else {
-        os = "pc";
-    }
+// OS識別用
+let os;
 
+// DOM構築完了イベントハンドラ登録
+window.addEventListener("DOMContentLoaded", init);
+
+// 初期化
+function init() {
+    // 簡易的なOS判定
+    os = detectOSSimply();
     if (os == "iphone") {
-        // safari用。DeviceOrientationAPIの使用をユーザに許可して貰う
+        // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
         window.addEventListener(
@@ -29,24 +23,11 @@ function judgOS() {
             orientation,
             true
         );
-    } else {
-        window.alert("PC未対応");
+    } else{
+        window.alert("PC未対応サンプル");
     }
 }
 
-// iPhone + Safariの場合はDeviceOrientation APIの使用許可をユーザに求める
-function permitDeviceOrientationForSafari() {
-    DeviceOrientationEvent.requestPermission()//requestPermission()で通知を送るDeviceOrientationEventが許可したい内容
-        .then(response => {
-            if (response === "granted") {
-                window.addEventListener(
-                    "deviceorientation",
-                    detectDirection
-                );
-            }
-        })
-        .catch(console.error);
-}
 
 // ジャイロスコープと地磁気をセンサーから取得
 function orientation(event) {
@@ -56,11 +37,11 @@ function orientation(event) {
     let gamma = event.gamma;
 
     let degrees;
-    if (os == "iphone") {
+    if(os == "iphone") {
         // webkitCompasssHeading値を採用
         degrees = event.webkitCompassHeading;
 
-    } else {
+    }else{
         // deviceorientationabsoluteイベントのalphaを補正
         degrees = compassHeading(alpha, beta, gamma);
     }
@@ -87,7 +68,8 @@ function orientation(event) {
         direction = "北西";
     }
 
-    document.querySelector("#direction").innerHTML = direction + " : " + degrees;
+    document.querySelector("#direction").innerHTML =
+        direction + " : " + degrees;
     document.querySelector("#absolute").innerHTML = absolute;
     document.querySelector("#alpha").innerHTML = alpha;
     document.querySelector("#beta").innerHTML = beta;
@@ -97,25 +79,25 @@ function orientation(event) {
 // 端末の傾き補正（Android用）
 // https://www.w3.org/TR/orientation-event/
 function compassHeading(alpha, beta, gamma) {
-    let degtorad = Math.PI / 180; // Degree-to-Radian conversion
+    var degtorad = Math.PI / 180; // Degree-to-Radian conversion
 
-    let _x = beta ? beta * degtorad : 0; // beta value
-    let _y = gamma ? gamma * degtorad : 0; // gamma value
-    let _z = alpha ? alpha * degtorad : 0; // alpha value
+    var _x = beta ? beta * degtorad : 0; // beta value
+    var _y = gamma ? gamma * degtorad : 0; // gamma value
+    var _z = alpha ? alpha * degtorad : 0; // alpha value
 
-    let cX = Math.cos(_x);
-    let cY = Math.cos(_y);
-    let cZ = Math.cos(_z);
-    let sX = Math.sin(_x);
-    let sY = Math.sin(_y);
-    let sZ = Math.sin(_z);
+    var cX = Math.cos(_x);
+    var cY = Math.cos(_y);
+    var cZ = Math.cos(_z);
+    var sX = Math.sin(_x);
+    var sY = Math.sin(_y);
+    var sZ = Math.sin(_z);
 
     // Calculate Vx and Vy components
-    let Vx = -cZ * sY - sZ * sX * cY;
-    let Vy = -sZ * sY + cZ * sX * cY;
+    var Vx = -cZ * sY - sZ * sX * cY;
+    var Vy = -sZ * sY + cZ * sX * cY;
 
     // Calculate compass heading
-    let compassHeading = Math.atan(Vx / Vy);
+    var compassHeading = Math.atan(Vx / Vy);
 
     // Convert compass heading to use whole unit circle
     if (Vy < 0) {
@@ -125,4 +107,37 @@ function compassHeading(alpha, beta, gamma) {
     }
 
     return compassHeading * (180 / Math.PI); // Compass Heading (in degrees)
+}
+
+// 簡易OS判定
+function detectOSSimply() {
+    let ret;
+    if (
+        navigator.userAgent.indexOf("iPhone") > 0 ||
+        navigator.userAgent.indexOf("iPad") > 0 ||
+        navigator.userAgent.indexOf("iPod") > 0
+    ) {
+        // iPad OS13のsafariはデフォルト「Macintosh」なので別途要対応
+        ret = "iphone";
+    } else if (navigator.userAgent.indexOf("Android") > 0) {
+        ret = "android";
+    } else {
+        ret = "pc";
+    }
+
+    return ret;
+}
+
+// iPhone + Safariの場合はDeviceOrientation APIの使用許可をユーザに求める
+function permitDeviceOrientationForSafari() {
+    DeviceOrientationEvent.requestPermission()
+        .then(response => {
+            if (response === "granted") {
+                window.addEventListener(
+                    "deviceorientation",
+                    detectDirection
+                );
+            }
+        })
+        .catch(console.error);
 }
