@@ -1,160 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コンパス</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
-    }
-    .compass-container {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      border: 5px solid #333;
-      border-radius: 50%;
-      background-color: #fff;
-    }
-    .compass-needle {
-      position: absolute;
-      bottom: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 100px solid #e63946;
-      transform-origin: bottom center;
-      transform: translate(-50%, 0) rotate(0deg);
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li {
-      margin: 5px 0;
-    }
-    #permit {
-      margin-bottom: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンパス</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
 </head>
+
 <body>
-  <ul>
-    <input type="button" id="permit" value="Apple製品を使ってる場合はこのボタンを押して許可してね" />
-    <li>【方角】<span id="direction"></span></li>
-    <li>【absolute】<span id="absolute"></span></li>
-    <li>【alpha】<span id="alpha"></span></li>
-    <li>【beta】<span id="beta"></span></li>
-    <li>【gamma】<span id="gamma"></span></li>
-  </ul>
-  <h1>コンパス</h1>
-  <div class="compass-container">
-    <div class="compass-needle" id="needle"></div>
-  </div>
+    <ul>
+        <input type="button" id="permit" value="Apple製品を使ってる場合はこのボタンを押して許可してね" />
+        <li>【方角】<span id="direction"></span></li>
+        <li>【absolute】<span id="absolute"></span></li>
+        <li>【alpha】<span id="alpha"></span></li>
+        <li>【beta】<span id="beta"></span></li>
+        <li>【gamma】<span id="gamma"></span></li>
+    </ul>
+    <h1>コンパス</h1>
+    <div class="compass-container">
+        <div class="compass-needle" id="needle"></div>
+    </div>
+    <div class="angle-display" id="angle-display">角度: 0°</div>
 </body>
-<script>
-  // 方角をリアルタイムで取得
-  function orientation(event) {
-    const absolute = event.absolute;
-    const alpha = event.alpha;
-    const beta = event.beta;
-    const gamma = event.gamma;
 
-    let degrees;
-    if (typeof event.webkitCompassHeading !== "undefined") {
-      // iPhoneの場合、webkitCompassHeadingを使用
-      degrees = event.webkitCompassHeading;
-    } else {
-      // Androidなどはalphaを使う
-      degrees = compassHeading(alpha, beta, gamma);
-    }
-
-    let direction;
-    if ((degrees > 337.5 && degrees <= 360) || (degrees >= 0 && degrees <= 22.5)) {
-      direction = "北";
-    } else if (degrees > 22.5 && degrees <= 67.5) {
-      direction = "北東";
-    } else if (degrees > 67.5 && degrees <= 112.5) {
-      direction = "東";
-    } else if (degrees > 112.5 && degrees <= 157.5) {
-      direction = "東南";
-    } else if (degrees > 157.5 && degrees <= 202.5) {
-      direction = "南";
-    } else if (degrees > 202.5 && degrees <= 247.5) {
-      direction = "南西";
-    } else if (degrees > 247.5 && degrees <= 292.5) {
-      direction = "西";
-    } else if (degrees > 292.5 && degrees <= 337.5) {
-      direction = "北西";
-    }
-
-    document.querySelector("#direction").textContent = `${direction} (${Math.round(degrees)}°)`;
-    document.querySelector("#absolute").textContent = absolute;
-    document.querySelector("#alpha").textContent = alpha.toFixed(2);
-    document.querySelector("#beta").textContent = beta.toFixed(2);
-    document.querySelector("#gamma").textContent = gamma.toFixed(2);
-
-    const needle = document.getElementById("needle");
-    needle.style.transform = `translate(-50%, 0) rotate(${degrees}deg)`;
-  }
-
-  // Android用: alpha, beta, gammaから方角を計算
-  function compassHeading(alpha, beta, gamma) {
-    const _x = beta * (Math.PI / 180);
-    const _y = gamma * (Math.PI / 180);
-    const _z = alpha * (Math.PI / 180);
-
-    const cX = Math.cos(_x);
-    const cY = Math.cos(_y);
-    const cZ = Math.cos(_z);
-    const sX = Math.sin(_x);
-    const sY = Math.sin(_y);
-    const sZ = Math.sin(_z);
-
-    const Vx = -cZ * sY - sZ * sX * cY;
-    const Vy = -sZ * sY + cZ * sX * cY;
-    let degrees = Math.atan(Vx / Vy);
-
-    if (Vy < 0) {
-      degrees += Math.PI;
-    } else if (Vx < 0) {
-      degrees += 2 * Math.PI;
-    }
-
-    return (degrees * (180 / Math.PI) + 360) % 360;
-  }
-
-  // Apple製品のアクセス許可
-  document.getElementById("permit").addEventListener("click", () => {
-    if (
-      typeof DeviceOrientationEvent !== "undefined" &&
-      typeof DeviceOrientationEvent.requestPermission === "function"
-    ) {
-      DeviceOrientationEvent.requestPermission()
-        .then((permissionState) => {
-          if (permissionState === "granted") {
-            window.addEventListener("deviceorientationabsolute", orientation);
-          } else {
-            alert("センサーの使用が許可されませんでした");
-          }
-        })
-        .catch(console.error);
-    } else {
-      // Androidやその他デバイス
-      window.addEventListener("deviceorientationabsolute", orientation);
-    }
-  });
-</script>
 </html>
