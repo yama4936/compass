@@ -109,9 +109,9 @@ function compassHeading(alpha, beta, gamma) {
     return compassHeading * (180 / Math.PI); // Compass Heading (in degrees)
 }
 
-// 簡易OS判定
+// OSの判定
 function detectOSSimply() {
-    let ret;
+    let ret;//userAgentで読み込んでindexofで探している
     if (
         navigator.userAgent.indexOf("iPhone") > 0 ||
         navigator.userAgent.indexOf("iPad") > 0 ||
@@ -130,7 +130,7 @@ function detectOSSimply() {
 
 // iPhone + Safariの場合はDeviceOrientation APIの使用許可をユーザに求める
 function permitDeviceOrientationForSafari() {
-    DeviceOrientationEvent.requestPermission()
+    DeviceOrientationEvent.requestPermission()//requestPermission()で通知を送るDeviceOrientationEventが許可したい内容
         .then(response => {
             if (response === "granted") {
                 window.addEventListener(
