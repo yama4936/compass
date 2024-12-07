@@ -24,12 +24,27 @@
                 }        
             document.removeEventListener("touchstart", initiatePermissionRequest);
         });
+
+        function initiatePermissionRequest() {//removeのために関数を定義
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {//DeviceOrientationEvent.requestPermissionに関数が入っている場合
+                DeviceOrientationEvent.requestPermission()
+                    .then((response) => {
+                        if (response === "granted") {//granted許可、denied拒否
+                            window.addEventListener("deviceorientation", detectDirection);
+                            console.log("DeviceOrientation permission granted");
+                        } else {
+                            console.log("Permission denied");
+                        }
+                    })
+                    .catch(console.error);
+                }  
+            };      
     </script>
 </head>
 
 <body>
     <ul>
-        <input type="button" id="permit" value="SafariでDeviceOrientationを許可" />
+        <button onclick="permission_request();">動作と方向へのアクセス許可</button>
         <li>【方角】<span id="direction"></span></li>
         <li>【absolute】<span id="absolute"></span></li>
         <li>【alpha】<span id="alpha"></span></li>

@@ -30,7 +30,7 @@ function judgOS() {
             true
         );
     } else {
-        window.alert("PC未対応サンプル");
+        window.alert("PC未対応");
     }
 }
 
