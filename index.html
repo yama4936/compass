@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
 
+    <script src="main.js"></script>
     <script type="text/javascript">
         alert("alartじゃなくてalert")
         document.addEventListener("touchstart", function initiatePermissionRequest() {//removeのために関数を定義
@@ -44,7 +45,7 @@
 
 <body>
     <ul>
-        <button onclick="permission_request();">動作と方向へのアクセス許可</button>
+        <input type="button" id="permit" value="SafariでDeviceOrientationを許可"/>
         <li>【方角】<span id="direction"></span></li>
         <li>【absolute】<span id="absolute"></span></li>
         <li>【alpha】<span id="alpha"></span></li>
