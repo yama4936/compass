@@ -15,7 +15,7 @@ function judgOS() {
     }
 
     if (os == "iphone") {
-        // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
+        // safari用。DeviceOrientationAPIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
         window.addEventListener(
@@ -36,7 +36,7 @@ function judgOS() {
 
 // iPhone + Safariの場合はDeviceOrientation APIの使用許可をユーザに求める
 function permitDeviceOrientationForSafari() {
-    DeviceOrientationEvent.requestPermission()//
+    DeviceOrientationEvent.requestPermission()//requestPermission()で通知を送るDeviceOrientationEventが許可したい内容
         .then(response => {
             if (response === "granted") {
                 window.addEventListener(
