@@ -73,8 +73,8 @@ function orientation(event) {//addEventListenerからもらってる
         direction = "北西";
     }
 
-    document.querySelector("#direction").innerHTML =  degrees;
-    document.querySelector("#angle").innerHTML =  degrees;
+    document.querySelector("#direction").innerHTML = direction ;
+    document.querySelector("#angle").innerHTML = degrees;
 
     // コンパス針を回転
     const needle = document.getElementById('needle');
