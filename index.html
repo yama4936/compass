@@ -7,39 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
 
-    <script type="text/javascript">
-        alert("alartじゃなくてalert")
-        document.addEventListener("touchstart", function initiatePermissionRequest() {//removeのために関数を定義
-            if (typeof DeviceOrientationEvent.requestPermission === "function") {//DeviceOrientationEvent.requestPermissionに関数が入っている場合
-                DeviceOrientationEvent.requestPermission()
-                    .then((response) => {
-                        if (response === "granted") {//granted許可、denied拒否
-                            window.addEventListener("deviceorientation", detectDirection);
-                            console.log("DeviceOrientation permission granted");
-                        } else {
-                            console.log("Permission denied");
-                        }
-                    })
-                    .catch(console.error);
-                }        
-            document.removeEventListener("touchstart", initiatePermissionRequest);
-        });
-
-        function initiatePermissionRequest() {//removeのために関数を定義
-            if (typeof DeviceOrientationEvent.requestPermission === "function") {//DeviceOrientationEvent.requestPermissionに関数が入っている場合
-                DeviceOrientationEvent.requestPermission()
-                    .then((response) => {
-                        if (response === "granted") {//granted許可、denied拒否
-                            window.addEventListener("deviceorientation", detectDirection);
-                            console.log("DeviceOrientation permission granted");
-                        } else {
-                            console.log("Permission denied");
-                        }
-                    })
-                    .catch(console.error);
-                }  
-            };      
-    </script>
     <script src="main.js"></script>
 </head>
 
