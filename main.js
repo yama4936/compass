@@ -2,20 +2,20 @@
 let os;
 
 // DOM構築完了イベントハンドラ登録
-window.addEventListener("DOMContentLoaded", init);
+window.addEventListener("DOMContentLoaded", init);//ページ内のHTML構造（DOM）がすべて読み込まれた後、外部リソース（画像やCSSなど）の読み込みが完了する前に実行される。
 
 // 初期化
 function init() {
     // 簡易的なOS判定
     os = detectOSSimply();
     if (os == "iphone") {
-        document.addEventListener("touchstart", permitDeviceOrientationForSafari);
+        //document.addEventListener("touchstart", permitDeviceOrientationForSafari);
 
-        document.addEventListener("scroll", permitDeviceOrientationForSafari);
+        //document.addEventListener("scroll", permitDeviceOrientationForSafari);
 
-        document.addEventListener("touchstart", alert("タップしたよ"));
+        //document.addEventListener("touchstart", alert("タップしたよ"));
 
-        document.addEventListener("scroll", alert("スクロールしたよ"));
+        //document.addEventListener("scroll", alert("スクロールしたよ"));
         // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
@@ -86,25 +86,25 @@ function orientation(event) {
 // 端末の傾き補正（Android用）
 // https://www.w3.org/TR/orientation-event/
 function compassHeading(alpha, beta, gamma) {
-    var degtorad = Math.PI / 180; // Degree-to-Radian conversion
+    let degtorad = Math.PI / 180; // Degree-to-Radian conversion
 
-    var _x = beta ? beta * degtorad : 0; // beta value
-    var _y = gamma ? gamma * degtorad : 0; // gamma value
-    var _z = alpha ? alpha * degtorad : 0; // alpha value
+    let _x = beta ? beta * degtorad : 0; // beta value
+    let _y = gamma ? gamma * degtorad : 0; // gamma value
+    let _z = alpha ? alpha * degtorad : 0; // alpha value
 
-    var cX = Math.cos(_x);
-    var cY = Math.cos(_y);
-    var cZ = Math.cos(_z);
-    var sX = Math.sin(_x);
-    var sY = Math.sin(_y);
-    var sZ = Math.sin(_z);
+    let cX = Math.cos(_x);
+    let cY = Math.cos(_y);
+    let cZ = Math.cos(_z);
+    let sX = Math.sin(_x);
+    let sY = Math.sin(_y);
+    let sZ = Math.sin(_z);
 
     // Calculate Vx and Vy components
-    var Vx = -cZ * sY - sZ * sX * cY;
-    var Vy = -sZ * sY + cZ * sX * cY;
+    let Vx = -cZ * sY - sZ * sX * cY;
+    let Vy = -sZ * sY + cZ * sX * cY;
 
     // Calculate compass heading
-    var compassHeading = Math.atan(Vx / Vy);
+    let compassHeading = Math.atan(Vx / Vy);
 
     // Convert compass heading to use whole unit circle
     if (Vy < 0) {
