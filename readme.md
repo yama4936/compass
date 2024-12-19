@@ -9,8 +9,19 @@ JSとセンサー系の練習としてコンパスのwebアプリをつくりま
 
 ## 使用方法
 
-https://yama4936.github.io/compasspractice/
+### Webサイトで閲覧
+
+https://yama4936.github.io/compass
 を開く
+
+### 実行方法
+~~~
+git clone https://github.com/yama4936/compass.git
+~~~
+
+自分の端末でhttpsのサーバーを立ち上げてスマホからアクセスしてください
+
+iPhoneでは、httpの環境ではセンサーの許可を出せないので
 
 ## 実行方法の例
 
@@ -23,7 +34,6 @@ https://yama4936.github.io/compasspractice/
 ### android または ios13以前の場合
 
 特に確認なしで使える
-
 
 ## ライセンス
 
